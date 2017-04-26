@@ -16,22 +16,28 @@ File author/s:
     Matthias Petursson <oldschool01123@gmail.com>
 */
 
-#include <QGuiApplication>
-#include <QQmlApplicationEngine>
-#include <QtWebEngine/QtWebEngine>
+#ifndef SAGE_H
+#define SAGE_H
 
-#include "sage.h"
+#include <QObject>
 
-int main(int argc, char *argv[])
+class Sage : public QObject
 {
-    QGuiApplication app(argc, argv);
+    Q_OBJECT
+    Q_PROPERTY(int answerToLife READ answerToLife NOTIFY answerToLifeChanged)
 
-    qmlRegisterType<Sage>("WisdomClub", 1, 0, "Sage");
+public:
+    explicit Sage(QObject *parent = 0);
 
-    QtWebEngine::initialize();
+    int answerToLife() const;
 
-    QQmlApplicationEngine engine;
-    engine.load(QUrl(QLatin1String("qrc:/main.qml")));
+    Q_INVOKABLE void changeAnswerToLife();
 
-    return app.exec();
-}
+signals:
+    void answerToLifeChanged(int answer);
+
+private:
+    int m_answerToLife;
+};
+
+#endif // SAGE_H

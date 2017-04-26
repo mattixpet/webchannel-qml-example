@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <script type="text/javascript" src="qrc:///qtwebchannel/qwebchannel.js"></script>
+        <script type="text/javascript">
+            function output(message) {
+                var output = document.getElementById("output");
+                output.innerHTML = output.innerHTML + message + "<br>";
+            }
+            function modifyAnswerToLife(newAnswer) {
+                document.getElementById("currentAnswer").innerHTML = "Current answer to life: " + newAnswer;
+            }
+            window.onload = function() {
+                new QWebChannel(qt.webChannelTransport, function(channel) {
+                    // all published objects are available in channel.objects under
+                    // the identifier set in their attached WebChannel.id property
+                    var sage = channel.objects.wiseMan;
+
+                    // access a property
+                    modifyAnswerToLife(sage.answerToLife);
+
+                    // connect to a signal
+                    sage.answerToLifeChanged.connect(function(message) {
+                        output("Got signal: " + message);
+                        modifyAnswerToLife(message);
+                    });
+
+                    output("Connected to WebChannel, ready to send/receive messages!");
+                });
+             }
+        </script>
+    </head>
+    <body>
+        <p>Here lie the answers:</p>
+        <p id="currentAnswer">Current answer to life: ?</p>
+        <div id="output"></div>
+    </body>
+</html>

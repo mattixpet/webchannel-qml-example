@@ -18,32 +18,40 @@ File author/s:
 
 import QtQuick 2.6
 import QtQuick.Window 2.2
+import QtQuick.Controls 1.4
+import QtWebChannel 1.0
+import QtWebEngine 1.1
+
+import WisdomClub 1.0
 
 Window {
     visible: true
     width: 640
     height: 480
-    title: qsTr("Hello World")
+    title: qsTr("WebChannel QML Example")
 
-    MouseArea {
-        anchors.fill: parent
-        onClicked: {
-            console.log(qsTr('Clicked on background. Text: "' + textEdit.text + '"'))
-        }
+    Sage {
+        id: oldBeardedMan
+        WebChannel.id: "wiseMan"
     }
 
-    TextEdit {
-        id: textEdit
-        text: qsTr("Enter some text...")
-        verticalAlignment: Text.AlignVCenter
+    WebEngineView {
+        id: webview
+        anchors.fill: parent
+        url: "qrc:/index.html"
+        webChannel: channel
+    }
+
+    WebChannel {
+        id: channel
+        registeredObjects: [oldBeardedMan]
+    }
+
+    Button {
+        text: "Enlighten"
+        anchors.right: parent.right
         anchors.top: parent.top
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.topMargin: 20
-        Rectangle {
-            anchors.fill: parent
-            anchors.margins: -10
-            color: "transparent"
-            border.width: 1
-        }
+        anchors.margins: 30
+        onClicked: oldBeardedMan.changeAnswerToLife()
     }
 }

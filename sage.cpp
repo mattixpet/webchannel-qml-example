@@ -16,22 +16,20 @@ File author/s:
     Matthias Petursson <oldschool01123@gmail.com>
 */
 
-#include <QGuiApplication>
-#include <QQmlApplicationEngine>
-#include <QtWebEngine/QtWebEngine>
-
 #include "sage.h"
 
-int main(int argc, char *argv[])
+Sage::Sage(QObject *parent)
+    : QObject(parent),
+      m_answerToLife(42)
+{ }
+
+int Sage::answerToLife() const
 {
-    QGuiApplication app(argc, argv);
+    return m_answerToLife;
+}
 
-    qmlRegisterType<Sage>("WisdomClub", 1, 0, "Sage");
-
-    QtWebEngine::initialize();
-
-    QQmlApplicationEngine engine;
-    engine.load(QUrl(QLatin1String("qrc:/main.qml")));
-
-    return app.exec();
+void Sage::changeAnswerToLife()
+{
+    m_answerToLife = (int) (m_answerToLife * 8.5f) % 43;
+    emit answerToLifeChanged(m_answerToLife);
 }
