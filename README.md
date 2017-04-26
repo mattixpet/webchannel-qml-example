@@ -12,3 +12,7 @@ Here's a bunch of useful/less useful links which I encountered on my googling jo
 ## Usage
 
 Open the `.pro` file in QtCreator and hit `Ctrl-R` to run it. When you click the "Enlighten" button, you are invoking a function in a C++ object introduced to QML, which then in turn emits a signal which the embedded html receives and reacts to.
+
+## Notes
+
+Another useful example would be something similar to this, but using `WebSockets` through QML instead of this `qt.webChannelTransport`, however, I couldn't figure out how to get that to work with my example.
