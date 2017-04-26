@@ -8,3 +8,7 @@ Here's a bunch of useful/less useful links which I encountered on my googling jo
 * [WebChannel in QML](http://doc.qt.io/qt-5/qtwebchannel-chatclient-qml-example.html) (but with no .html or C++)
 * [WebEngineView docs](http://doc.qt.io/qt-5/qml-qtwebengine-webengineview.html) (WebEngineView used to embed local html)
 * [Old way of connecting to WebChannel](https://www.kdab.com/qt-webchannel-bridging-gap-cqml-web/) (includes the needed javascript code and other useful information)
+
+## Usage
+
+Open the `.pro` file in QtCreator and hit `Ctrl-R` to run it. When you click the "Enlighten" button, you are invoking a function in a C++ object introduced to QML, which then in turn emits a signal which the embedded html receives and reacts to.
